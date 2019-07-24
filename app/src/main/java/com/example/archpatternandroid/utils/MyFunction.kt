@@ -15,8 +15,6 @@ import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import java.io.File
 
- class MyFunction {
-
     fun toast(ctx: Context, message: String) {
         Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show()
     }
@@ -88,5 +86,3 @@ import java.io.File
         val requestBody = createRequestForImage(file)
         return MultipartBody.Part.createFormData("vsgambar", file.getName(), requestBody)
     }
-
-}

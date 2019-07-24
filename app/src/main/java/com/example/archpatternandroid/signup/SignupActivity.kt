@@ -31,8 +31,10 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import com.example.archpatternandroid.images.ImagesPresenter
+import com.example.archpatternandroid.networking.Injection
 import com.example.archpatternandroid.register.RegisterPresenter
-import com.example.archpatternandroid.utils.MyFunction
+import com.example.archpatternandroid.repository.RegisterRepositoryImpl
+import com.example.archpatternandroid.utils.displayPhotosPreview
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -46,9 +48,10 @@ import java.lang.Exception
 
 
 class SignupActivity : AppCompatActivity(), ImagesContract.View, SignupContract.View, View.OnClickListener {
+
     private lateinit var imagesPresenter : ImagesPresenter
 
-    private lateinit var presenter: SignUpPresenter
+    private lateinit var presenter: SignupPresenter
 
     private lateinit var compressor : Compressor
 
@@ -96,7 +99,7 @@ class SignupActivity : AppCompatActivity(), ImagesContract.View, SignupContract.
         }
     }
     private fun initPresenter(){
-        presenter = SignUpPresenter()
+        presenter = com.example.archpatternandroid.signup.SignupPresenter()
         imagesPresenter = ImagesPresenter(this)
     }
     private fun initCompressImage(){
@@ -195,7 +198,7 @@ class SignupActivity : AppCompatActivity(), ImagesContract.View, SignupContract.
         val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (takePicture.resolveActivity(packageManager) != null) {
             if (file != null) {
-                val mPhotoUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", file)
+                val mPhotoUri = FileProvider.getUriForFile(this, "com.example.archpatternandroid.fileprovider", file)
                 takePicture.putExtra(MediaStore.EXTRA_OUTPUT, mPhotoUri)
                 filePicture = file
                 startActivityForResult(takePicture, REQUEST_CAMERA)
@@ -214,8 +217,7 @@ class SignupActivity : AppCompatActivity(), ImagesContract.View, SignupContract.
     }
 
     override fun onShowPhotosPreview(file: File) {
-        val myFunction =  MyFunction()
-        myFunction.displayPhotosPreview(this, iv_profile, file)
+        displayPhotosPreview(this, iv_profile, file)
     }
 
     override fun onShowDialogSelectedPhotos() {
