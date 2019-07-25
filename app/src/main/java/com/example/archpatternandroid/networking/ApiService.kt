@@ -2,13 +2,9 @@ package com.example.archpatternandroid.networking
 
 import com.example.archpatternandroid.entity.ResponseLogin
 import com.example.archpatternandroid.entity.ResponseRegister
-import okhttp3.Call
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.http.Field
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -23,11 +19,14 @@ interface ApiService {
     ): retrofit2.Call<ResponseRegister>
 
 
-    @Multipart
+    @FormUrlEncoded
     @POST("get-pengguna-login.php")
     fun login(
         @Field("nama") name: String,
-        @Field("passowrd") password: String
+        @Field("password") password: String
     ): retrofit2.Call<ResponseLogin>
+
+    @GET("get-pengguna-view.php")
+    fun getListUser() : retrofit2.Call<ResponseUser>
 
 }

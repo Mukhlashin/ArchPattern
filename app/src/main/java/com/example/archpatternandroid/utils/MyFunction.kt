@@ -84,5 +84,5 @@ import java.io.File
     fun createMultipartBody(filePath: String): MultipartBody.Part {
         val file = File(filePath)
         val requestBody = createRequestForImage(file)
-        return MultipartBody.Part.createFormData("vsgambar", file.getName(), requestBody)
+        return MultipartBody.Part.createFormData("foto", file.getName(), requestBody)
     }

@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.archpatternandroid.R
+import com.example.archpatternandroid.networking.Injection
+import com.example.archpatternandroid.repository.LoginRepositoryImpl
+import com.example.archpatternandroid.repository.UserRepositoryImpl
 
 
 /**
@@ -32,7 +35,9 @@ class UserFragment : Fragment(), UserContract.View {
     }
 
     private fun initPresenter() {
-        presenter = UserPresenter()
+        val service = Injection.provideApiService()
+        val repository = UserRepositoryImpl(service)
+        presenter = UserPresenter(repository)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
